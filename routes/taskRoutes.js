@@ -5,7 +5,6 @@ const role = require("../middleware/role");
 
 const router = express.Router();
 
-// Create Task
 router.post("/", auth, async (req, res) => {
   try {
     const task = await Task.create({
@@ -18,7 +17,7 @@ router.post("/", auth, async (req, res) => {
   }
 });
 
-// Get Tasks (user or admin)
+
 router.get("/", auth, async (req, res) => {
   let tasks;
 
@@ -31,19 +30,19 @@ router.get("/", auth, async (req, res) => {
   res.json(tasks);
 });
 
-// Update Task
+
 router.put("/:id", auth, async (req, res) => {
   const task = await Task.findByIdAndUpdate(req.params.id, req.body, { new: true });
   res.json(task);
 });
 
-// Delete Task
+
 router.delete("/:id", auth, async (req, res) => {
   await Task.findByIdAndDelete(req.params.id);
   res.json({ msg: "Deleted" });
 });
 
-// Mark completed
+
 router.patch("/:id/complete", auth, async (req, res) => {
   const task = await Task.findByIdAndUpdate(
     req.params.id,
@@ -53,7 +52,7 @@ router.patch("/:id/complete", auth, async (req, res) => {
   res.json(task);
 });
 
-// Logic Challenge: getPendingTasks
+
 router.get("/pending", auth, async (req, res) => {
   const tasks = await Task.find({
     userId: req.user.id,
