@@ -12,7 +12,6 @@ const schema = Joi.object({
   password: Joi.string().min(6).required()
 });
 
-// Register
 router.post("/register", async (req, res) => {
   const { error } = schema.validate(req.body);
   if (error) return res.status(400).json(error.details);
@@ -30,7 +29,6 @@ router.post("/register", async (req, res) => {
   res.json(user);
 });
 
-// Login
 router.post("/login", async (req, res) => {
   const user = await User.findOne({ email: req.body.email });
   if (!user) return res.status(400).json({ msg: "User not found" });
